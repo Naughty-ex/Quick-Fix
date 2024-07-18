@@ -124,9 +124,9 @@
 
     // Display a success message to the user
     const formContainer = form.parentElement;
-    const successMessage = document.createElement('div');
+    const successMessage = document.createElement('');
     successMessage.classList.add('success-message'); // Add a class for styling
-    successMessage.textContent = "Registration successful! Redirecting...";
+    successMessage.textContent = "Registration successful! Please login with your credentials";
     formContainer.insertBefore(successMessage, form);
 
     // Optionally, hide the form to focus the user's attention on the success message

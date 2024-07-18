@@ -1,18 +1,18 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
     <link rel="icon" type="image/x-icon" href="/logo.png">
-    <link rel="icon" href="/img/logo.png">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>QuicK-Fix</title>
-  </head>
-  <body>
+</head>
+<body>
 
 <div class="d-lg-flex half">
   <div class="bg order-1 order-md-2" style="background-image: url('images/bg_11.png');"></div>
@@ -38,15 +38,13 @@
             </div>
             Password
             <div class="form-group last mb-3">
-              <!-- <label for="password">Password</label> -->
-              <input type="password" class="form-control" id="password" required>
-            </div>
-            Confirm Password
-           <div class="form-group last mb-3">
-                <!-- <label for="confirm-password">Confirm Password</label> -->
-                <input type="password" class="form-control" id="confirmPassword" required>
-              </div>
-  
+              <input type="password" class="form-control" id="password" placeholder="Password" required>
+              <span class="togglePassword"><i class="fas fa-eye"></i></span>
+          </div>
+          <div class="form-group last mb-3">
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+              <span class="toggleConfirmPassword"><i class="fas fa-eye"></i></span>
+          </div>
               <input type="submit" value="Sign Up" class="btn btn-block btn-primary">
   
               <br>
@@ -63,207 +61,92 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('myForm');
-const fullName = document.getElementById('fullName');
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const confirmPassword = document.getElementById('confirmPassword');
-const container = document.querySelector(".container");
-const togglePassword = document.querySelector(".togglepwd");
-const toggleConfirmPassword = document.querySelector(".togglepwd2")
-// toggle password
-// togglePassword.addEventListener("click",()=>{
-//    if(password.type === "password"){
-//       password.type = "text"
-//    }else{
-//       password.type = "password";
-//    }
-// })
-// toggleConfirmPassword.addEventListener("click",()=>{
-//    if(confirmPassword.type === "password"){
-//       confirmPassword.type = "text"
-//    }else{
-//       confirmPassword.type = "password";
-//    }
-// })
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const togglePassword = document.querySelector('.togglePassword');
+    const toggleConfirmPassword = document.querySelector('.toggleConfirmPassword');
 
-// validation messages
-let errorMessage= document.createElement("p");
-let errorMessageEmail = document.createElement("p");
-let errorMessageContact = document.createElement("p");
-let errorMessagePwd = document.createElement("p");
-// succcess message
-let successMessage = document.createElement("div")
-   // successMessage.innerHTML = "Form submitted successfully!!"
-   successMessage.style.cssText = "z-index:1000 ; padding:10px; background:white; height:7vh; align-self:center; font-size:1.2rem; display:grid; place-items:center;border:1px solid green "
-//  Error Message  
-let errorPwdMessage = document.createElement("div")
-   errorPwdMessage.innerHTML = "Passwords do not match!"
-   errorPwdMessage.style.cssText = "z-index:1000 ; padding:10px; background:white; height:7vh; align-self:center; font-size:1.2rem; display:grid; place-items:center;border:1px solid green "
-// error message
-let errormsg = document.createElement("div");
-errormsg.style.cssText = "z-index:1000 ; padding:10px; background:white; height:7vh; align-self:center; font-size:1.2rem; display:grid; place-items:center;border:1px solid red "
-
-
-// email validation
-
-console.log("hi")
-
-email.addEventListener("blur" , ()=>{
-
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!emailRegex.test(email.value)) {
-       errorMessageEmail.textContent = " Please enter a valid email address."
-       inputWrap.insertBefore(errorMessageEmail , email.nextElementSibling) ;
-       let emalVal = email.value;
-       email.value = null;
-        
-    }else{
-        errorMessageEmail.remove();
+    // Function to display an error message
+    function displayErrorMessage(inputElement, message) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('error-message'); // Add a class for styling
+        messageElement.textContent = message;
+        inputElement.classList.add('is-invalid'); // Highlight the input field
+        inputElement.parentNode.insertBefore(messageElement, inputElement.nextSibling); // Insert the message
     }
-})
 
-// Password length validation
-password.addEventListener("keyup" , ()=>{
-   if (password.value.length < 8) {
-       errorMessagePwd.textContent = " Password must be at least 8 characters long."
-       inputWrap.insertBefore(errorMessagePwd , password.nextElementSibling)
-  
-      //  isValid = false;
-   }else{
-       errorMessagePwd.remove();
-   }
-
-})
-
-
-
-
-
-
-
-form.addEventListener('submit', (event) => {
- event.preventDefault(); 
- console.log("hello")
-
-
- // Validation checks
- let isValid = true;
-
- // Full name validation 
- if (fullName.value.trim() === '' ) {
-   
-     errorMessage.textContent = "Please enter your full name."
-       inputWrap.insertBefore(errorMessage , fullName.nextElementSibling)
-   
-     isValid = false;
- }else{
-     errorMessage.remove();
- }
-  
-
-//  Email validation (check for @ and .)
- const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
- if (!emailRegex.test(email.value)) {
-    event.preventDefault(); 
-   //  let emalVal = email.value;
-   //  email.value = null;
-     
-    isValid = false;  
-    
- }
-
- //  Password validation (example: check for minimum length)
- if (password.value.length < 8) {
-   isValid = false;
-}
- 
-
-
- 
-
-//  Passwords match check
- if (confirmPassword.value !== password.value) {
-   
-     isValid = false;
-     
-     password.value = null;
-     confirmPassword.value = null;
-     container.insertBefore(errorPwdMessage , form)  
-     setTimeout(()=>{
-         errorPwdMessage.remove();
-        },3000)                           ;
- }
-
- if (isValid) {
-   
-
-
-     class UserInfo{
-        constructor(name , email , contactNumber ,password , passwordConfirm) {
-         this.name = name;
-         this.email =email ;
-         this.contactNumber = contactNumber;
-         this.password = password; 
-         this.passwordConfirm = passwordConfirm;
-         
+    // Function to clear error messages
+    function clearErrorMessage(inputElement) {
+        const existingMessage = inputElement.parentNode.querySelector('.error-message');
+        if (existingMessage) {
+            inputElement.parentNode.removeChild(existingMessage);
+            inputElement.classList.remove('is-invalid'); // Remove highlight from the input field
         }
+    }
+
+    // Function to toggle password visibility
+    function togglePasswordVisibility(passwordField, toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            // Check if the password is currently visible
+            const isPasswordVisible = passwordField.type === "password";
+            // Toggle the type attribute
+            passwordField.type = isPasswordVisible ? "text" : "password";
+            // Toggle the icon class
+            toggleBtn.firstChild.classList.toggle('fa-eye');
+            toggleBtn.firstChild.classList.toggle('fa-eye-slash');
+        });
+    }
+
+    // Apply the toggle functionality to password fields
+    togglePasswordVisibility(password, togglePassword);
+    togglePasswordVisibility(confirmPassword, toggleConfirmPassword);
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Clear previous error messages
+        clearErrorMessage(email);
+        clearErrorMessage(password);
+        clearErrorMessage(confirmPassword);
+
+        // Perform validation checks
+        const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!emailRegex.test(email.value)) {
+            displayErrorMessage(email, "Please enter a valid email address.");
+            return;
         }
-    
-    let fullNameValue = fullName.value;
-    let emailvalue = email.value;
-    let contactValue = contact.value;
-    let passwordValue =password.value ;
-    let passwordConfirmValue = confirmPassword.value;
-     let user = new UserInfo(fullNameValue , emailvalue , contactValue ,passwordValue, passwordConfirmValue )
-    
-     fetch("https://cadence-connect.onrender.com/api/v1/users/sign-up",{
-     method: 'POST',
-     headers:{
-        'content-Type':'application/json'
-     },
-     body: JSON.stringify(user)
-     }).then(response =>{
-        if(response.ok){
-         console.log(response)
-         successMessage.innerHTML = "Redirecting..."
-         container.insertBefore(successMessage , form)
-         setTimeout(() => {
-            successMessage.remove()
-         setTimeout(() => {
-            window.location.replace("../../html and css files/clientLoggedIn.html")
-         }, 1000);
-         }, 5000);
-         
-        
-        }else{
-         errormsg.innerHTML = "check your email!"
-         container.insertBefore(errormsg, form)
-         setTimeout(() => {
-           errormsg.remove();
-         }, 3000);
-        }
-     }).catch(error=>{
-      errormsg.innerHTML = "Check your data Connection!"
-      container.insertBefore(errormsg , form)
-      setTimeout(() => {
-        errormsg.remove();
-      }, 6000);
-        console.log("Error during signUp")
-     })
 
-     
-     console.log(user)
+        // Check if password match
+        console.log("Form submitted successfully!");
 
+    // Display a success message to the user
+    const formContainer = form.parentElement;
+    const successMessage = document.createElement('div');
+    successMessage.classList.add('success-message'); // Add a class for styling
+    successMessage.textContent = "Registration successful! Redirecting...";
+    formContainer.insertBefore(successMessage, form);
 
- }
+    // Optionally, hide the form to focus the user's attention on the success message
+    form.style.display = 'none';
+    setTimeout(() => window.location.href = "signin.html", 3000);
+    // Consider redirecting the user after a successful form submission
+    // This could be to a 'thank you' page, a dashboard, or any other appropriate location
+    // setTimeout(() => window.location.href = "success_page.html", 3000); // Redirect to another page after 3 seconds
+
+    // Alternatively, if you plan to keep the user on the same page, you might want to reset the form and prepare it for another submission
+    setTimeout(() => {
+        form.reset();
+        form.style.display = ''; // Show the form again for further use
+        successMessage.remove(); // Remove the success message after a certain time to clean up the UI
+    }, 5000); // Adjust the timeout as needed based on your UX design
+
 });
+}); 
+
+
   </script>
-  
-  
   </body>
   </html>
-  
-  
-
-

@@ -1,194 +1,77 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
     <link rel="icon" type="image/x-icon" href="/logo.png">
-    <link rel="icon" href="/img/logo.png">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>QuicK-Fix</title>
-  </head>
-  <body>
-  <div class="d-lg-flex half">
+</head>
+<body>
+<div class="d-lg-flex half">
     <div class="bg order-1 order-md-2" style="background-image: url('images/bg_11.png');"></div>
     <div class="contents order-2 order-md-1">
-
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-md-7">
-            <div class="mb-4">
-              <h3>Sign In</h3>
-              <p class="mb-4">Enter your credentials to access your account.</p>
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-7">
+                    <div class="mb-4">
+                        <h3>Sign In</h3>
+                        <p class="mb-4">Enter your credentials to access your account.</p>
+                    </div>
+                    <form id="myForm" action="" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" placeholder="email@domain.com" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            <span class="togglePassword" style="cursor: pointer;"><i class="fas fa-eye"></i></span>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-primary" id="submitBtn">
+                            Log In
+                        </button>
+                        <br>
+                        <p>Don't have an account? <a href="/login-form-06/signup.html" class="signin">Sign up here.</a></p>
+                    </form>
+                </div>
             </div>
-            <form action="" method="post">
-              
-              
-              <div class="social-login">
-                 Email Address
-              <div class="form-group first">
-                <!-- <label for="username">Username</label> -->
-                <input type="text" class="form-control" id="username" placeholder="email@domain.com">
-
-              </div>
-              <div class="d-flex align-items-center">
-                Password
-                <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password?</a></span> 
-              </div>
-              <div class="form-group last mb-3">
-                <!-- <label for="password">Password</label> -->
-                <input type="password" class="form-control" id="password" placeholder="Password">
-              </div>
-              
-              
-
-              <input type="submit" value="Log In" class="btn btn-block btn-primary">
-              <br>
-              <p>Don't have an account? <a href="/login-form-06/signup.html" class="signin">Sign up here.</a></p>
-
-              
-              </div>
-            </form>
-          </div>
         </div>
-      </div>
     </div>
-
-    
-  </div>
-  <script>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('myForm');
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const main = document.querySelector("main");
+    const submitBtn = document.getElementById('submitBtn');
+    const togglePassword = document.querySelector('.togglePassword');
 
+    togglePassword.addEventListener('click', function() {
+        const password = document.getElementById('password');
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.firstChild.classList.toggle('fas fa-eye');
+        this.firstChild.classList.toggle('fas fa-eye-slash');
+    });
 
-
-
-
-
-let errorMessageEmail = document.createElement("h2");
-errorMessageEmail.style.cssText = "color:red; font-size:10px ; height: 8%; text-align:left;"
-
-// Error Message
-let errorMessage = document.createElement("h2");
-errorMessage.style.cssText = "color:red; font-size:10px ; height: 8%; text-align:left;"
-
-// Bad request
-let BadErrorMessage = document.createElement("h2");
-BadErrorMessage .style.cssText = "color:red; font-size:10px ; height: 8%; text-align:left;"
-
-// Successful Log In Message!!!
-
-let successMessage = document.createElement("div");
-
-
-// VALIDATION EVENT Listeners
-
-email.addEventListener("blur",()=>{
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!emailRegex.test(email.value)) {
-       errorMessageEmail.textContent = " Please enter a valid email address."
-       inputWrap.insertBefore(errorMessageEmail , email.nextElementSibling)
-   
-       isValid = false;  
-       
-    }else{
-        errorMessageEmail.remove();
-    }
-
-})
-
-
-
-
-    
-form.addEventListener('submit', (event) => {
- event.preventDefault(); 
-  
-
- // Validation checks
- let isValid = true;
-
-
-
- // Email validation (check for @ and .)
- const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
- if (!emailRegex.test(email.value)) {
-    isValid = false;    
- }
-
-
- if (isValid) {
-    container.insertBefore(successMessage , main);
-   
-   
-     class UserInfo{
-           constructor(email ,password ) {
-            this.email =email ;
-            this.password = password;  
-           }
-           }
-       
-   
-       let emailvalue = email.value;
-       let passwordValue =password.value ;;
-   
-       
-        let user = new UserInfo( emailvalue , passwordValue )
-       
-        fetch("https://cadence-connect.onrender.com/api/v1/users/login",{
-        method: 'POST',
-        headers:{
-           'content-Type':'application/json'
-        },
-        body: JSON.stringify(user)
-        }).then(response =>{
-           if(response.ok){
-           setTimeout(() => {
-            successMessage.innerHTML = "Logged In";
-            successMessage.style.cssText = "border:1px solid black ; height:10vh ; width:30% ; display:grid; place-items:center; padding:5px ; color:green";
-            container.insertBefore(successMessage , main)
-            setTimeout(() => {
-               window.location.replace("home.html") 
-            }, 1000);
-           }, 800);
-           console.log(response)
-           }else{
-            setTimeout(() => {
-               errorMessage.innerHTML = "Wrong Email or Password";
-               errorMessage.style.cssText = "border:1px solid black ; height:10vh ; width:30% ; display:grid; place-items:center; padding:5px;font-size:1rem;color:red"
-               container.insertBefore(errorMessage , main)
-               setTimeout(() => {
-                 errorMessage.remove();
-               }, 3000);
-              }, 800);
-            
-           }
-        }).catch(error=>{
-         BadErrorMessage.innerHTML = "Error during Sign In"
-         container.insertBefore(BadErrorMessage, main)
-         BadErrorMessage.style.cssText = "border:1px solid black ; height:10vh ; width:30% ; display:grid; place-items:center; padding:5px;font-size:1rem;color:red"
-         setTimeout(() => {
-            BadErrorMessage.remove();
-         }, 3000);
-           
-        })
-   
-        
-        console.log(user)
-   
-    }});
-  </script>
-    
-    
-
-    <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
-    <!-- <script src="js/popper.min.js"></script> -->
-    <script src="js/bootstrap.min.js"></script>
-  </body>
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        submitBtn.innerHTML = 'Loading...<i class="fa fa-cog fa-spin"></i>';
+        // Here, you would typically handle the form submission, such as making an API call.
+        // For demonstration, simulate an API call with setTimeout
+        setTimeout(() => {
+            // Reset button text or handle form submission success
+            submitBtn.innerHTML = 'Log In';
+            // Example: Redirect or display a success message
+        }, 3000); // Simulate API call delay
+    });
+});
+</script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
 </html>
+

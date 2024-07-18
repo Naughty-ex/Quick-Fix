@@ -32,6 +32,27 @@ h2 {
 .half, .half .container > .row {
   height: 100vh; }
 
+
+  .togglePassword, .toggleConfirmPassword {
+    cursor: pointer;
+    border: none;
+    background: none;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.togglePassword i, .toggleConfirmPassword i {
+    color: #007bff;
+    font-size: 1rem;
+}
+
+/* Change icon color on hover for better user feedback */
+.togglePassword:hover i, .toggleConfirmPassword:hover i {
+    color: #0056b3;
+}
+
 @media (max-width: 991.98px) {
   .half .bg {
     height: 500px; } }
@@ -188,3 +209,7 @@ color: #007bff;
 .control--checkbox input:disabled:checked ~ .control__indicator {
   background-color: #7e0cf5;
   opacity: .2; }
+
+
+
+

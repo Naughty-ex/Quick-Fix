@@ -69,23 +69,6 @@
     const togglePassword = document.querySelector('.togglePassword');
     const toggleConfirmPassword = document.querySelector('.toggleConfirmPassword');
 
-    // Function to display an error message
-    function displayErrorMessage(inputElement, message) {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('error-message'); // Add a class for styling
-        messageElement.textContent = message;
-        inputElement.classList.add('is-invalid'); // Highlight the input field
-        inputElement.parentNode.insertBefore(messageElement, inputElement.nextSibling); // Insert the message
-    }
-
-    // Function to clear error messages
-    function clearErrorMessage(inputElement) {
-        const existingMessage = inputElement.parentNode.querySelector('.error-message');
-        if (existingMessage) {
-            inputElement.parentNode.removeChild(existingMessage);
-            inputElement.classList.remove('is-invalid'); // Remove highlight from the input field
-        }
-    }
 
     // Function to toggle password visibility
     function togglePasswordVisibility(passwordField, toggleBtn) {

@@ -63,71 +63,113 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('myForm');
+    const inputWrap = document.querySelector(".inputWrap");
     const email = document.getElementById('email');
     const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-    const togglePassword = document.querySelector('.togglePassword');
-    const toggleConfirmPassword = document.querySelector('.toggleConfirmPassword');
+    const container = document.querySelector(".container");
+    const main = document.querySelector("main");
+    const togglePassword = document.querySelector(".togglepwd");
 
+    // Toggle Password visibility
+    togglePassword.addEventListener("click", () => {
+        if (password.type === "password") {
+            password.type = "text";
+        } else {
+            password.type = "password";
+        }
+    });
 
-    // Function to toggle password visibility
-    function togglePasswordVisibility(passwordField, toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            // Check if the password is currently visible
-            const isPasswordVisible = passwordField.type === "password";
-            // Toggle the type attribute
-            passwordField.type = isPasswordVisible ? "text" : "password";
-            // Toggle the icon class
-            toggleBtn.firstChild.classList.toggle('fa-eye');
-            toggleBtn.firstChild.classList.toggle('fa-eye-slash');
-        });
-    }
+    let errorMessageEmail = document.createElement("p");
+    errorMessageEmail.style.cssText = "color:red; font-size:10px; text-align:left;";
 
-    // Apply the toggle functionality to password fields
-    togglePasswordVisibility(password, togglePassword);
-    togglePasswordVisibility(confirmPassword, toggleConfirmPassword);
+    let errorMessagePassword = document.createElement("p");
+    errorMessagePassword.style.cssText = "color:red; font-size:10px; text-align:left;";
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent the form from submitting
+    let successMessage = document.createElement("div");
 
-        // Clear previous error messages
-        clearErrorMessage(email);
-        clearErrorMessage(password);
-        clearErrorMessage(confirmPassword);
-
-        // Perform validation checks
+    // Email Validation
+    email.addEventListener("blur", () => {
         const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!emailRegex.test(email.value)) {
-            displayErrorMessage(email, "Please enter a valid email address.");
-            return;
+            errorMessageEmail.textContent = "Please enter a valid email address.";
+            email.parentNode.insertBefore(errorMessageEmail, email.nextSibling);
+        } else {
+            errorMessageEmail.remove();
         }
+    });
 
-        // Check if password match
-        console.log("Form submitted successfully!");
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        let isValid = true;
 
-    // Display a success message to the user
-    const formContainer = form.parentElement;
-    const successMessage = document.createElement('');
-    successMessage.classList.add('success-message'); // Add a class for styling
-    successMessage.textContent = "Registration successful! Please login with your credentials";
-    formContainer.insertBefore(successMessage, form);
+        // Email validation
+        const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+if (!emailRegex.test(email.value)) {
+isValid = false;
+if (!errorMessageEmail.parentNode) {
+email.parentNode.insertBefore(errorMessageEmail, email.nextSibling);
+}
+} else {
+errorMessageEmail.remove();
+}
 
-    // Optionally, hide the form to focus the user's attention on the success message
-    form.style.display = 'none';
-    setTimeout(() => window.location.href = "signin.html", 3000);
-    // Consider redirecting the user after a successful form submission
-    // This could be to a 'thank you' page, a dashboard, or any other appropriate location
-    // setTimeout(() => window.location.href = "success_page.html", 3000); // Redirect to another page after 3 seconds
+    // Password length validation
+    if (password.value.length < 6) {
+        errorMessagePassword.textContent = "Password must be at least 6 characters long.";
+        if (!errorMessagePassword.parentNode.contains(errorMessagePassword)) {
+password.parentNode.insertBefore(errorMessagePassword, password.nextSibling);
+}
+isValid = false;
+} else {
+errorMessagePassword.remove();
+}
 
-    // Alternatively, if you plan to keep the user on the same page, you might want to reset the form and prepare it for another submission
-    setTimeout(() => {
-        form.reset();
-        form.style.display = ''; // Show the form again for further use
-        successMessage.remove(); // Remove the success message after a certain time to clean up the UI
-    }, 5000); // Adjust the timeout as needed based on your UX design
-
+    if (isValid) {
+        // Simulatean API call to log in the user
+fetch("https://cadence-connect.onrender.com/api/v1/users/sign-up", {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify({
+email: email.value,
+password: password.value
+})
+})
+.then(response => {
+if (response.ok) {
+return response.json();
+} else {
+throw new Error('Failed to log in');
+}
+})
+.then(data => {
+console.log(data);
+successMessage.innerHTML = "Logged In Successfully";
+successMessage.style.cssText = "border:1px solid green; height:10vh; width:30%; display:grid; place-items:center; padding:5px; color:green; margin-top: 10px;";
+container.insertBefore(successMessage, main);
+// Redirect user or update UI as needed
+setTimeout(() => {
+window.location.replace("../../html and css files/vendorDashboard.html");
+}, 1000);
+})
+.catch(error => {
+console.error('Error during Sign In:', error);
+let badErrorMessage = document.createElement("p");
+badErrorMessage.textContent = "Error during Sign In";
+badErrorMessage.style.cssText = "color:red; font-size:10px; height: 8%; text-align:left; margin-top: 10px;";
+container.insertBefore(badErrorMessage, main);
+setTimeout(() => {
+badErrorMessage.remove();
+}, 3000);
 });
-}); 
+}
+});
+});
+
+
+
+
 
 
   </script>

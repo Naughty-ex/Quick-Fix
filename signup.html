@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timeout = setTimeout(function() {
             passwordStrength.innerHTML = ''; // Clear the message
             passwordStrength.className = ''; // Reset the class
-        }, 3000); // 3000 milliseconds = 3 seconds
+        }, 3000); 
     });
 });
 
@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
             passwordMatch.textContent = "";
         }
     });
+
 
 function calculatePasswordStrength(password) {
     let strength = { message: '', class: '' };

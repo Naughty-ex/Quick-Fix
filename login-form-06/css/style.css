@@ -53,6 +53,38 @@ h2 {
     color: #0056b3;
 }
 
+
+/* Add this to your style.css */
+.strength {
+  /* color: #ffffff; */
+  padding: 5px;
+  text-align: center;
+}
+.weak {
+  color: #ff3e36;
+}
+.fair {
+  color: #f7aa38;
+}
+.good {
+  color: #ffd700;
+}
+.strong {
+  color: #28a745;
+}
+.validation {
+  color: #ff3e36;
+  font-size: 0.875em;
+}
+
+#passwordRequirement {
+  color: #6c757d; /* Bootstrap's default text-muted class color */
+  font-size: 0.875em;
+}
+
+
+
+
 @media (max-width: 991.98px) {
   .half .bg {
     height: 500px; } }

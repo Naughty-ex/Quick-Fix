@@ -74,13 +74,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
     const passwordStrength = document.getElementById('passwordStrength');
+    let timeout;
     const passwordMatch = document.getElementById('passwordMatch');
 
     password.addEventListener('input', function() {
+        // Clear any existing timeout to reset the timer
+        clearTimeout(timeout);
+
         let strength = calculatePasswordStrength(password.value);
         passwordStrength.innerHTML = strength.message;
         passwordStrength.className = 'strength ' + strength.class;
+
+        // Set the message to disappear after 3 seconds
+        timeout = setTimeout(function() {
+            passwordStrength.innerHTML = ''; // Clear the message
+            passwordStrength.className = ''; // Reset the class
+        }, 3000); // 3000 milliseconds = 3 seconds
     });
+});
 
     confirmPassword.addEventListener('input', function() {
         if(password.value !== confirmPassword.value) {
@@ -90,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
             passwordMatch.textContent = "";
         }
     });
-});
 
 function calculatePasswordStrength(password) {
     let strength = { message: '', class: '' };

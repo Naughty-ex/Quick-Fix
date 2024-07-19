@@ -35,7 +35,7 @@
                             Log In
                         </button>
                         <br>
-                        <p>Don't have an account? <a href="/login-form-06/signup.html" class="signin">Sign up here.</a></p>
+                        <p>Don't have an account? <a href="signup.html" class="signin">Sign up here.</a></p>
                     </form>
                 </div>
             </div>
@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = document.getElementById('password');
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);
-        this.firstChild.classList.toggle('fas fa-eye');
-        this.firstChild.classList.toggle('fas fa-eye-slash');
+        this.firstChild.classList.toggle('fa-eye');
+        this.firstChild.classList.toggle('fa-eye-slash');
     });
 
     form.addEventListener('submit', function(event) {
@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000); // Simulate API call delay
     });
 });
+
+
 </script>
 <script src="./login-form-06/js/jquery-3.3.1.min.js"></script>
 <script src="./login-form-06/js/popper.min.js"></script>

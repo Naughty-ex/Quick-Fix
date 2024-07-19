@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/login-form-06/fonts/icomoon/style.css">
     <link rel="icon" type="image/x-icon" href="/logo.png">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/login-form-06/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/login-form-06/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/login-form-06/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>QuicK-Fix</title>
 </head>
@@ -56,9 +56,9 @@
     </div>
   </div>
   
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="./login-form-06/js/jquery-3.3.1.min.js"></script>
+<script src="./login-form-06/js/popper.min.js"></script>
+<script src="./login-form-06/js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -68,16 +68,16 @@
     const password = document.getElementById('password');
     const container = document.querySelector(".container");
     const main = document.querySelector("main");
-    const togglePassword = document.querySelector(".togglepwd");
+    const togglePassword = document.querySelector('.togglePassword');
 
-    // Toggle Password visibility
-    togglePassword.addEventListener("click", () => {
-        if (password.type === "password") {
-            password.type = "text";
-        } else {
-            password.type = "password";
-        }
+    togglePassword.addEventListener('click', function() {
+        const password = document.getElementById('password');
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.firstChild.classList.toggle('fa-eye');
+        this.firstChild.classList.toggle('fa-eye-slash');
     });
+
 
     let errorMessageEmail = document.createElement("p");
     errorMessageEmail.style.cssText = "color:red; font-size:10px; text-align:left;";

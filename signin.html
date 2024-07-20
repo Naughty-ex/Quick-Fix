@@ -45,30 +45,52 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('myForm');
-    const submitBtn = document.getElementById('submitBtn');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
     const togglePassword = document.querySelector('.togglePassword');
 
     togglePassword.addEventListener('click', function() {
-        const password = document.getElementById('password');
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
         this.firstChild.classList.toggle('fa-eye');
         this.firstChild.classList.toggle('fa-eye-slash');
     });
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        submitBtn.innerHTML = 'Loading...<i class="fa fa-cog fa-spin"></i>';
-        // Here, you would typically handle the form submission, such as making an API call.
-        // For demonstration, simulate an API call with setTimeout
-        setTimeout(() => {
-                       // Redirect to home.html after the simulated API call
-                       window.location.href = '/home.html';
-        }, 3000); // Simulate API call delay
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerHTML = 'Logging in...<i class="fa fa-cog fa-spin"></i>';
+
+        const loginData = {
+            email: emailInput.value,
+            password: passwordInput.value,
+        };
+
+        fetch('http://localhost:1017/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Login Success:', data);
+            // Redirect to home.html on successful login
+            window.location.href = '/home.html';
+        })
+        .catch((error) => {
+            console.error('Login Error:', error);
+            alert('Login failed: ' + error.message);
+            submitBtn.innerHTML = 'Log In'; // Reset button text
+        });
     });
 });
-
-
 </script>
 <script src="./login-form-06/js/jquery-3.3.1.min.js"></script>
 <script src="./login-form-06/js/popper.min.js"></script>

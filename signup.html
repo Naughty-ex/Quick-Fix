@@ -22,8 +22,8 @@
       <div class="row align-items-center justify-content-center">
         <div class="col-md-7">
           <div class="mb-4">
-            <h3>Sign Up</h3>
-            <p class="mb-4">Create your account to get started.</p>
+            <h4>Sign Up</h4>
+            <!-- <p class="mb-4">Create your account to get started.</p> -->
           </div>
           <form action="#" id="myForm" method="post">
             Full Name
@@ -44,6 +44,7 @@
           <div id="passwordRequirement" class="mt-2">Password must be at least 6 characters long.</div>
           <div id="passwordStrength" class="mt-2"></div>
           <br>
+          confirm Password
           <div class="form-group last mb-3">
               <input type="password" class="form-control" id="confirmPassword" required>
               <span class="toggleConfirmPassword"><i class="fas fa-eye"></i></span>
@@ -74,60 +75,131 @@
   <script src="js/main.js"></script>
 
   <script>
- document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     setupPasswordToggle();
-    document.getElementById('myForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        if (validateForm()) {
-            submitFormData();
-        }
-    });
+    setupFormValidation();
 });
 
 function setupPasswordToggle() {
-    document.querySelectorAll('.togglePassword').forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const passwordField = toggle.previousElementSibling; // Assuming the toggle is right after the input
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            this.firstChild.classList.toggle('fa-eye');
-            this.firstChild.classList.toggle('fa-eye-slash');
-        });
+    const togglePassword = document.querySelector('.togglePassword');
+    const toggleConfirmPassword = document.querySelector('.toggleConfirmPassword');
+    togglePassword.addEventListener('click', function() {
+        toggleVisibility('password', this);
+    });
+
+    toggleConfirmPassword.addEventListener('click', function() {
+        toggleVisibility('confirmPassword', this);
     });
 }
 
-function validateForm() {
-    // Implement validation logic here
-    // Return true if the form is valid, or false otherwise
-    return true; // Placeholder return value
+function toggleVisibility(fieldId, toggleIcon) {
+    const field = document.getElementById(fieldId);
+    const type = field.getAttribute('type') === 'password' ? 'text' : 'password';
+    field.setAttribute('type', type);
+    toggleIcon.firstChild.classList.toggle('fa-eye');
+    toggleIcon.firstChild.classList.toggle('fa-eye-slash');
 }
 
+function setupFormValidation() {
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordStrength = document.getElementById('passwordStrength');
+    const passwordRequirement = document.getElementById('passwordRequirement');
+    const passwordMatch = document.getElementById('passwordMatch');
+    let timeout;
+
+    password.addEventListener('input', function() {
+        clearTimeout(timeout);
+        const strength = calculatePasswordStrength(password.value);
+        passwordStrength.innerHTML = strength.message;
+        passwordStrength.className = 'strength ' + strength.class;
+        timeout = setTimeout(() => clearMessage(passwordStrength), 3000);
+
+        if(password.value.length >= 6) {
+            passwordRequirement.style.display = 'none';
+        } else {
+            passwordRequirement.style.display = 'block';
+            passwordRequirement.textContent = 'Password must be at least 6 characters long.';
+        }
+    });
+
+    confirmPassword.addEventListener('input', function() {
+        passwordMatch.textContent = password.value !== confirmPassword.value ? "Passwords do not match!" : "";
+        passwordMatch.className = password.value !== confirmPassword.value ? 'validation' : '';
+    });
+}
+
+function calculatePasswordStrength(password) {
+    let strength = { message: '', class: '' };
+    if (password.length >= 6 && /[a-z]/.test(password) && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+        strength.message = 'Strong Password!';
+        strength.class = 'strong';
+    } else if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
+        strength.message = 'Fair Password!';
+        strength.class = 'fair';
+    } else {
+        strength.message = 'Weak Password!';
+        strength.class = 'weak';
+    }
+    return strength;
+}
+
+function clearMessage(element) {
+    element.innerHTML = '';
+    element.className = '';
+}
 function submitFormData() {
     const formData = {
         fullName: document.getElementById('fullName').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
+        // other form fields here, idk if i need the confirm password
     };
 
-    fetch('https://quickfix-sy96.onrender.com/api/auth/register', {
+    // endpoint URL? or the signup link? 
+    const endpoint = 'https://quickfix-sy96.onrender.com/api/auth/register';
+
+    fetch(endpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            // Convert and throw an error if the response wasn't ok
+            return response.json().then(body => { throw new Error(body.message) });
+        }
+        return response.json();
+    })
     .then(data => {
         console.log('Success:', data);
+        // Handle success, such as redirecting to another page or showing a success message
         alert('Registration successful!');
-        window.location.href = '/login.html'; // Redirect after successful registration
+        // Redirect to login page or home page as needed
+        window.location.href = '/signin.html'; // Adjust the URL as necessary
     })
     .catch((error) => {
         console.error('Error:', error);
+        // Handle errors, such as showing an error message to the user
         alert(`Registration failed: ${error.message}`);
     });
 }
 
+// Inside your form validation logic
+if (isFormValid) {
+    submitFormData();
+} else {
+    // Handle invalid form case
+}
+document.getElementById('myForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    // Call your form validation function here
+    // If valid, it will call submitFormData
+});
+
+// window.location.href = '/signin.html'; 
   </script>
   </body>
   </html>

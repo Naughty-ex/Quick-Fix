@@ -148,44 +148,43 @@ function clearMessage(element) {
     element.innerHTML = '';
     element.className = '';
 }
-function submitFormData() {
+async function submitFormData() {
     const formData = {
         fullName: document.getElementById('fullName').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value,
         // contact: document.getElementById('contact').value,
     };
 
-    // endpoint URL? or the signup link? 
     const endpoint = 'https://quickfix-sy96.onrender.com/api/auth/register';
 
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-    .then(response => {
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
         if (!response.ok) {
-            // Convert and throw an error if the response wasn't ok
-            return response.json().then(body => { throw new Error(body.message) });
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
-    })
-    .then(data => {
+
+        const data = await response.json();
         console.log('Success:', data);
-        // Handle success, such as redirecting to another page or showing a success message
+        // Handle success, such as redirecting the user or displaying a success message
         alert('Registration successful!');
-        // Redirect to login page or home page as needed
         window.location.href = '/signin.html'; // Adjust the URL as necessary
-    })
-    .catch((error) => {
+    } catch (error) {
         console.error('Error:', error);
-        // Handle errors, such as showing an error message to the user
+        // Handle errors, such as displaying an error message to the user
         alert(`Registration failed: ${error.message}`);
-    });
+    }
 }
+
+
   </script>
   </body>
   </html>

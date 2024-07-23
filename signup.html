@@ -25,16 +25,18 @@
             <h4>Sign Up</h4>
             <!-- <p class="mb-4">Create your account to get started.</p> -->
           </div>
-          <form action="#" id="myForm" method="post">
+          <form action="/api/v1/users/signup" id="myForm" method="post">
             Full Name
             <div class="form-group first">
-              <!-- <label for="username">Full Name</label> -->
               <input type="text" class="form-control" id="fullName" placeholder="e.g Muhammad Ibrahim" required>
             </div>
             Email
             <div class="form-group">
-              <!-- <label for="email">Email</label> -->
               <input type="email" class="form-control" id="email" placeholder="email@domain.com" >
+            </div>
+            Phone Number
+            <div class="form-group">
+              <input type="tel" class="form-control" id="contact" placeholder="e.g 08104422205" >
             </div>
             Password
             <div class="form-group last mb-3">
@@ -52,9 +54,6 @@
           <div id="passwordMatch" class="mt-2"></div>
           <br>
           
-          
-          <form action="/api/v1/users/signup" id="myForm" method="post">
-            <!-- Form fields -->
             <input type="submit" value="Sign Up" class="btn btn-block btn-primary">
         </form>
         
@@ -83,6 +82,7 @@
 function setupPasswordToggle() {
     const togglePassword = document.querySelector('.togglePassword');
     const toggleConfirmPassword = document.querySelector('.toggleConfirmPassword');
+
     togglePassword.addEventListener('click', function() {
         toggleVisibility('password', this);
     });
@@ -153,7 +153,7 @@ function submitFormData() {
         fullName: document.getElementById('fullName').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
-        // other form fields here, idk if i need the confirm password
+        contact: document.getElementById('contact').value,
     };
 
     // endpoint URL? or the signup link? 
@@ -186,21 +186,6 @@ function submitFormData() {
         alert(`Registration failed: ${error.message}`);
     });
 }
-
-// Inside your form validation logic
-if (isFormValid) {
-    submitFormData();
-} else {
-    // Handle invalid form case
-}
-document.getElementById('myForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-    // Call your form validation function here
-    // If valid, it will call submitFormData
-});
-
-// window.location.href = '/signin.html'; 
   </script>
   </body>
   </html>
-

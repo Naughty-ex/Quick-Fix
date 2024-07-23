@@ -98,7 +98,7 @@ h2 {
     overflow: hidden;
     margin-bottom: 30px;
     border: 1px solid #efefef;
-    padding: 7px 7px;
+    padding: 2px 2px;
     position: relative; }
     .half .contents .form-group label, .half .bg .form-group label {
       position: absolute;

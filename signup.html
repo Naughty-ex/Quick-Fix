@@ -28,7 +28,7 @@
           <form action="/api/v1/users/signup" id="myForm" method="post">
             Full Name
             <div class="form-group first">
-              <input type="text" class="form-control" id="fullName" placeholder="e.g Muhammad Ibrahim" required>
+              <input type="text" class="form-control" id="name" placeholder="e.g Muhammad Ibrahim" required>
             </div>
             Email
             <div class="form-group">
@@ -149,7 +149,7 @@ function clearMessage(element) {
 }
 async function submitFormData() {
     const formData = {
-        fullName: document.getElementById('fullName').value,
+        name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
         confirmPassword: document.getElementById('confirmPassword').value,

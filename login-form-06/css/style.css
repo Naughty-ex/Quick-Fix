@@ -121,6 +121,22 @@ h2 {
 }
 
 
+/* Modal Header */
+.modal-header {
+  padding: 10px 16px;
+  /* background-color: #5cb85c; */
+  color: #007bff;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* Adjusting the Close Button Position */
+.modal-content .close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
 
 
 @media (max-width: 991.98px) {

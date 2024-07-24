@@ -66,35 +66,35 @@ document.addEventListener('DOMContentLoaded', function() {
             password: passwordInput.value,
         };
 
-        fetch('http://localhost:1017/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginData),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Login failed');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Login Success:', data);
-            // Redirect to home.html on successful login
-            window.location.href = '/home.html';
-        })
-        .catch((error) => {
-            console.error('Login Error:', error);
-            alert('Login failed: ' + error.message);
-            submitBtn.innerHTML = 'Log In'; // Reset button text
-        });
+        const errorMessageElement = document.getElementById('error-message');
+
+fetch('/api/auth/login', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginData),
+})
+// .then(response => {
+//     console.log('Login Success:', data);
+//     // Redirect to home.html on successful login
+//     window.location.href = '/home.html';
+// })
+.then(data => {
+    console.log('Login Success:', data);
+    // Redirect to home.html on successful login
+    window.location.href = '/home.html';
+})
+.catch((error) => {
+    console.error('Login Error:', error);
+    // Display the error message in a designated element instead of using alert
+    errorMessageElement.textContent = 'Login failed: ' + error.message;
+    errorMessageElement.style.display = 'block'; // Make sure the error message is visible
+    submitBtn.innerHTML = 'Log In'; // Reset button text
+});
     });
 });
 </script>
-<script src="./login-form-06/js/jquery-3.3.1.min.js"></script>
-<script src="./login-form-06/js/popper.min.js"></script>
-<script src="./login-form-06/js/bootstrap.min.js"></script>
 </body>
 </html>
 

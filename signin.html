@@ -67,8 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const errorMessageElement = document.getElementById('error-message');
-
-fetch('/api/auth/login', {
+fetch('https://quickfix-sy96.onrender.com/api/auth/login', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -80,18 +79,20 @@ fetch('/api/auth/login', {
 //     // Redirect to home.html on successful login
 //     window.location.href = '/home.html';
 // })
-.then(data => {
+if(errorMessageElement.ok) {
     console.log('Login Success:', data);
     // Redirect to home.html on successful login
     window.location.href = '/home.html';
-})
-.catch((error) => {
-    console.error('Login Error:', error);
-    // Display the error message in a designated element instead of using alert
-    errorMessageElement.textContent = 'Login failed: ' + error.message;
-    errorMessageElement.style.display = 'block'; // Make sure the error message is visible
-    submitBtn.innerHTML = 'Log In'; // Reset button text
-});
+}
+else(
+    console.log('login failed'))
+// .catch((error) => {
+    // console.error('Login Error:', error);
+    // // Display the error message in a designated element instead of using alert
+    // errorMessageElement.textContent = 'Login failed: ' + error.message;
+    // errorMessageElement.style.display = 'block'; // Make sure the error message is visible
+    // submitBtn.innerHTML = 'Log In'; // Reset button text
+// });
     });
 });
 </script>

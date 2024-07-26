@@ -47,16 +47,17 @@
             <div class="form-group">
               <input type="email" class="form-control" id="email" placeholder="email@domain.com" >
             </div>
-            Phone Number
+            <!-- Phone Number
             <div class="form-group">
               <input type="tel" class="form-control" id="contact" placeholder="098754345" >
-            </div>
+            </div> -->
             Password
             <div class="form-group last mb-3">
               <input type="password" class="form-control" id="password" required>
               <span class="togglePassword"><i class="fas fa-eye"></i></span>
           </div>
-          <!-- <div id="passwordRequirement" class="mt-2">Password must be at least 6 characters long.</div> -->
+          <div id="passwordRequirement" class="mt-2">Password must be at least 6 characters long.</div>
+          <!-- <div id="passwordRequirement" class="mt-2">include uppercase, lowercase and numbers for a strong password.</div> -->
           <div id="passwordStrength" class="mt-2"></div>
           <br>
           confirm Password
@@ -81,14 +82,38 @@
       </div>
     </div>
   </div>
-  
-  <!-- <script src="./login-form-06/js/jquery-3.3.1.min.js"></script> -->
-<!-- <script src="./login-form-06/js/popper.min.js"></script> -->
-<!-- <script src="./login-form-06/js/bootstrap.min.js"></script> -->
-  <!-- <script src="js/main.js"></script> -->
 
   <script>
 // Define all necessary functions first
+const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordStrength = document.getElementById('passwordStrength');
+    const passwordRequirement = document.getElementById('passwordRequirement');
+    const passwordMatch = document.getElementById('passwordMatch');
+    let timeout;
+
+    password.addEventListener('input', function() {
+        clearTimeout(timeout);
+        const strength = calculatePasswordStrength(password.value);
+        passwordStrength.innerHTML = strength.message;
+        passwordStrength.className = 'strength ' + strength.class;
+        timeout = setTimeout(() => clearMessage(passwordStrength), 3000);
+
+        if(password.value.length >= 6) {
+            passwordRequirement.style.display = 'none';
+        } else {
+            passwordRequirement.style.display = 'block';
+            passwordRequirement.textContent = 'Password must be at least 6 characters long.';
+        }
+    });
+
+    confirmPassword.addEventListener('input', function() {
+        passwordMatch.textContent = password.value !== confirmPassword.value ? "Passwords do not match!" : "";
+        passwordMatch.className = password.value !== confirmPassword.value ? 'validation' : '';
+    });
+// function setupFormValidation() {
+    
+// }
 
 function toggleVisibility(fieldId, toggleIcon) {
     const field = document.getElementById(fieldId);
@@ -111,9 +136,11 @@ function setupPasswordToggle() {
     });
 }
 
-function setupFormValidation() {
-    // Your form validation logic here
-}
+
+// function setupFormValidation() {
+//     // Your form validation logic here
+    
+// }
 
 function calculatePasswordStrength(password) {
     let strength = { message: '', class: '' };
@@ -198,167 +225,11 @@ function setupFormSubmission() {
 
 
 
-// Execute setup functions after the DOM is fully loaded
+// Execute setup functions after the DOM is fully loaded nn
 document.addEventListener('DOMContentLoaded', function() {
     setupPasswordToggle();
     setupFormSubmission();
 });
-
-function setupFormValidation() {
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-    const passwordStrength = document.getElementById('passwordStrength');
-    const passwordRequirement = document.getElementById('passwordRequirement');
-    const passwordMatch = document.getElementById('passwordMatch');
-    let timeout;
-
-    password.addEventListener('input', function() {
-        clearTimeout(timeout);
-        const strength = calculatePasswordStrength(password.value);
-        passwordStrength.innerHTML = strength.message;
-        passwordStrength.className = 'strength ' + strength.class;
-        timeout = setTimeout(() => clearMessage(passwordStrength), 3000);
-
-        if(password.value.length >= 6) {
-            passwordRequirement.style.display = 'none';
-        } else {
-            passwordRequirement.style.display = 'block';
-            passwordRequirement.textContent = 'Password must be at least 6 characters long.';
-        }
-    });
-
-    confirmPassword.addEventListener('input', function() {
-        passwordMatch.textContent = password.value !== confirmPassword.value ? "Passwords do not match!" : "";
-        passwordMatch.className = password.value !== confirmPassword.value ? 'validation' : '';
-    });
-}
-
-function calculatePasswordStrength(password) {
-    let strength = { message: '', class: '' };
-    if (password.length >= 6 && /[a-z]/.test(password) && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
-        strength.message = 'Strong Password!';
-        strength.class = 'strong';
-    } else if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
-        strength.message = 'Fair Password!';
-        strength.class = 'fair';
-    } else {
-        strength.message = 'Weak Password!';
-        strength.class = 'weak';
-    }
-    return strength;
-}
-// const form = document.getElementById('myForm');
-// const inputWrap = document.querySelector(".inputWrap");
-const fullName = document.getElementById('fullName');
-const contact = document.getElementById('contact');
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const confirmPassword = document.getElementById('confirmPassword');
-// const container = document.querySelector(".container");
-// const togglePassword = document.querySelector(".togglepwd");
-// const toggleConfirmPassword = document.querySelector(".togglepwd2")
-// toggle password
-togglePassword.addEventListener("click",()=>{
-   if(password.type === "password"){
-      password.type = "text"
-   }else{
-      password.type = "password";
-   }
-})
-toggleConfirmPassword.addEventListener("click",()=>{
-   if(confirmPassword.type === "password"){
-      confirmPassword.type = "text"
-   }else{
-      confirmPassword.type = "password";
-   }
-})
-
-// validation messages
-let errorMessage= document.createElement("p");
-let errorMessageEmail = document.createElement("p");
-let errorMessageContact = document.createElement("p");
-let errorMessagePwd = document.createElement("p");
-// succcess message
-let successMessage = document.createElement("div")
-   // successMessage.innerHTML = "Form submitted successfully!!"
-   successMessage.style.cssText = "z-index:1000 ; padding:10px; background:white; height:7vh; align-self:center; font-size:1.2rem; display:grid; place-items:center;border:1px solid green "
-//  Error Message  
-let errorPwdMessage = document.createElement("div")
-   errorPwdMessage.innerHTML = "Passwords do not match!"
-   errorPwdMessage.style.cssText = "z-index:1000 ; padding:10px; background:white; height:7vh; align-self:center; font-size:1.2rem; display:grid; place-items:center;border:1px solid green "
-// error message
-let errormsg = document.createElement("div");
-errormsg.style.cssText = "z-index:1000 ; padding:10px; background:white; height:7vh; align-self:center; font-size:1.2rem; display:grid; place-items:center;border:1px solid red "
-
-
-// email validation
-
-console.log("hi")
-
-email.addEventListener("blur" , ()=>{
-
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!emailRegex.test(email.value)) {
-       errorMessageEmail.textContent = " Please enter a valid email address."
-       inputWrap.insertBefore(errorMessageEmail , email.nextElementSibling) ;
-       let emalVal = email.value;
-       email.value = null;
-        
-    }else{
-        errorMessageEmail.remove();
-    }
-})
-
-// Password length validation
-password.addEventListener("keyup" , ()=>{
-   if (password.value.length < 6) {
-       errorMessagePwd.textContent = " Password must be at least 6 characters long."
-       inputWrap.insertBefore(errorMessagePwd , password.nextElementSibling)
-  
-      //  isValid = false;
-   }else{
-       errorMessagePwd.remove();
-   }
-
-})
-
-
-
-
- // Validation checks
- let isValid = true;
-
- // Full name validation 
- if (fullName.value.trim() === '' ) {
-   
-     errorMessage.textContent = "Please enter your full name."
-       inputWrap.insertBefore(errorMessage , fullName.nextElementSibling)
-   
-     isValid = false;
- }else{
-     errorMessage.remove();
- }
-  
-
-//  Email validation (check for @ and .)
- const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
- if (!emailRegex.test(email.value)) {
-    event.preventDefault(); 
-   //  let emalVal = email.value;
-   //  email.value = null;
-     
-    isValid = false;  
-    
- }
-
- //  Password validation (example: check for minimum length)
- if (password.value.length < 8) {
-   isValid = false;
-}
-
-
- 
-
 //  Passwords match check
  if (confirmPassword.value !== password.value) {
    
@@ -371,80 +242,6 @@ password.addEventListener("keyup" , ()=>{
          errorPwdMessage.remove();
         },3000)                           ;
  }
-
- if (isValid) {
-   
-
-
-  class UserInfo {
-    constructor(name, email, phoneNumber, password, confirmPassword) {
-      this.name = name;
-      this.email = email;
-      this.phoneNumber = phoneNumber;
-      this.password = password;
-      this.confirmPassword = confirmPassword;
-    }
-  }
-    
-   let fullNameValue = fullName.value;
-   let emailvalue = email.value;
-   let contactValue = contact.value;
-   let passwordValue = password.value;
-   let passwordConfirmValue = confirmPassword.value;
-   let user = new UserInfo(
-     fullNameValue,
-     emailvalue,
-     contactValue,
-     passwordValue,
-     passwordConfirmValue
-   );
-    
-     fetch("https://quickfix-sy96.onrender.com/api/auth/register", {
-       method: "POST",
-       headers: {
-         "content-Type": "application/json",
-       },
-       body: JSON.stringify(user),
-     })
-       .then((response) => {
-         if (response.ok) {
-           console.log(response);
-           successMessage.innerHTML = "Redirecting...";
-           container.insertBefore(successMessage, form);
-           setTimeout(() => {
-             successMessage.remove();
-             setTimeout(() => {
-               console.log("Logged In");;
-             }, 1000);
-           }, 5000);
-           return response.json()
-         } else {
-           errormsg.innerHTML = "check your email!";
-           container.insertBefore(errormsg, form);
-           setTimeout(() => {
-             errormsg.remove();
-           }, 3000);
-         }
-       }).then((data)=>{
-        console.log(data);
-       })
-       .catch((error) => {
-         errormsg.innerHTML = "Check your data Connection!";
-         container.insertBefore(errormsg, form);
-         setTimeout(() => {
-           errormsg.remove();
-         }, 6000);
-         console.log("Error during signUp");
-       });
-
-     
-     console.log(user)
-
-
- }
- 
-
-
   </script>
   </body>
   </html>

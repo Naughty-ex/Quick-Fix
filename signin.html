@@ -42,12 +42,36 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Login Message</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Message will be inserted here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('myForm');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const togglePassword = document.querySelector('.togglePassword');
+    const submitBtn = document.getElementById('submitBtn');
+    // const messageModal = $('#messageModal');
+    const messageModalBody = document.querySelector('#messageModal .modal-body');
 
     togglePassword.addEventListener('click', function() {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -58,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        const submitBtn = document.getElementById('submitBtn');
         submitBtn.innerHTML = 'Logging in...<i class="fa fa-cog fa-spin"></i>';
 
         const loginData = {
@@ -66,33 +89,29 @@ document.addEventListener('DOMContentLoaded', function() {
             password: passwordInput.value,
         };
 
-        const errorMessageElement = document.getElementById('error-message');
-const response=fetch ('https://quickfix-sy96.onrender.com/api/auth/login', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-  },
-    body: JSON.stringify(loginData),
-}); const data=response.json();console.log ('response from api',data)
-// .then(response => {
-//     console.log('Login Success:', data);
-//     // Redirect to home.html on successful login
-//     window.location.href = '/home.html';
-// })
-if(response.ok) {
-    console.log('Login Success:', data);
-    // Redirect to home.html on successful login
-    window.location.href = '/home.html';
-}
-else(
-    console.log('login failed'))
-// .catch((error) => {
-    // console.error('Login Error:', error);
-    // // Display the error message in a designated element instead of using alert
-    // errorMessageElement.textContent = 'Login failed: ' + error.message;
-    // errorMessageElement.style.display = 'block'; // Make sure the error message is visible
-    // submitBtn.innerHTML = 'Log In'; // Reset button text
-// });
+            fetch('https://quickfix-sy96.onrender.com/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                window.location.href = 'home.html';
+            } else {
+                messageModalBody.textContent = 'Login failed: ' + data.message;
+                messageModal.modal('show');
+                submitBtn.innerHTML = 'Log In';
+            }
+        })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        //     messageModalBody.textContent = 'An error occurred. Please try again.';
+        //     messageModal.modal('show');
+        //     submitBtn.innerHTML = 'Log In';
+        // });
     });
 });
 </script>

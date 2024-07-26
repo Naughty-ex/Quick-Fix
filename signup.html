@@ -68,7 +68,9 @@
           <div id="passwordMatch" class="mt-2"></div>
           <br>
           
-            <input type="submit" value="Sign Up" class="nextWrap btn btn-block btn-primary">
+          <button type="submit" class="nextWrap btn btn-block btn-primary" id="submitBtn">
+            Sign Up
+          </button>
             
         
         
@@ -115,6 +117,21 @@ const password = document.getElementById('password');
 // function setupFormValidation() {
     
 // }
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('myForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        submitBtn.innerHTML = 'Signing up...<i class="fa fa-cog fa-spin"></i>';
+
+        // Continue with your form submission logic here...
+    });
+
+    // Rest of your JavaScript code...
+});
+
+
 
 function toggleVisibility(fieldId, toggleIcon) {
     const field = document.getElementById(fieldId);

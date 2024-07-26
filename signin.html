@@ -67,13 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const errorMessageElement = document.getElementById('error-message');
-const response= fetch ('https://quickfix-sy96.onrender.com/api/auth/login', {
+const response=fetch ('https://quickfix-sy96.onrender.com/api/auth/login', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
   },
     body: JSON.stringify(loginData),
-})
+}); const data=response.json();console.log ('response from api',data)
 // .then(response => {
 //     console.log('Login Success:', data);
 //     // Redirect to home.html on successful login

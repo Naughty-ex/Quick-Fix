@@ -56,7 +56,7 @@
               <input type="password" class="form-control" id="password" required>
               <span class="togglePassword"><i class="fas fa-eye"></i></span>
           </div>
-          <div id="passwordRequirement" class="mt-2">Password must be at least 6 characters long.</div>
+          <div id="passwordRequirement" class="mt-2">Password must be at least 8 characters long</div>
           <!-- <div id="passwordRequirement" class="mt-2">include uppercase, lowercase and numbers for a strong password.</div> -->
           <div id="passwordStrength" class="mt-2"></div>
           <br>
@@ -88,6 +88,7 @@
 const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
     const passwordStrength = document.getElementById('passwordStrength');
+    const passwordInput = document.getElementById('password'); 
     const passwordRequirement = document.getElementById('passwordRequirement');
     const passwordMatch = document.getElementById('passwordMatch');
     let timeout;
@@ -99,11 +100,11 @@ const password = document.getElementById('password');
         passwordStrength.className = 'strength ' + strength.class;
         timeout = setTimeout(() => clearMessage(passwordStrength), 3000);
 
-        if(password.value.length >= 6) {
+        if(password.value.length >= 8) {
             passwordRequirement.style.display = 'none';
         } else {
             passwordRequirement.style.display = 'block';
-            passwordRequirement.textContent = 'Password must be at least 6 characters long.';
+            passwordRequirement.textContent = 'Password must be at least 8 characters long!';
         }
     });
 
@@ -136,11 +137,31 @@ function setupPasswordToggle() {
     });
 }
 
+function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+            func(...args);
+        }, delay);
+    };
+}
 
-// function setupFormValidation() {
-//     // Your form validation logic here
-    
-// }
+function displayPasswordStrength() {
+    const strength = calculatePasswordStrength(password.value);
+    passwordStrength.textContent = strength.message;
+    passwordStrength.className = strength.class;
+    setTimeout(() => {
+        passwordStrength.textContent = '';
+        passwordStrength.className = '';
+    }, 1000); // Hide the message after 3 seconds
+}
+
+// Debounce the displayPasswordStrength function
+password.addEventListener('input', debounce(displayPasswordStrength, 2000));
+
 
 function calculatePasswordStrength(password) {
     let strength = { message: '', class: '' };

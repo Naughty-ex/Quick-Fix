@@ -226,7 +226,7 @@ function setupFormSubmission() {
 .then(data => {
     console.log('Success:', data);
     // Display the success modal
-    const modal = document.getElementById('successModal');
+    const modal = document.getElementById('successModal' + data.message);
     const span = document.getElementsByClassName('close')[0];
 
     modal.style.display = "block";

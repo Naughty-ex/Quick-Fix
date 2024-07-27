@@ -57,7 +57,6 @@
               <span class="togglePassword"><i class="fas fa-eye"></i></span>
           </div>
           <div id="passwordRequirement" class="mt-2">Password must be at least 8 characters long</div>
-          <!-- <div id="passwordRequirement" class="mt-2">include uppercase, lowercase and numbers for a strong password.</div> -->
           <div id="passwordStrength" class="mt-2"></div>
           <br>
           confirm Password
@@ -86,7 +85,6 @@
   </div>
 
   <script>
-// Define all necessary functions first
 const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
     const passwordStrength = document.getElementById('passwordStrength');
@@ -114,9 +112,6 @@ const password = document.getElementById('password');
         passwordMatch.textContent = password.value !== confirmPassword.value ? "Passwords do not match!" : "";
         passwordMatch.className = password.value !== confirmPassword.value ? 'validation' : '';
     });
-// function setupFormValidation() {
-    
-// }
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('myForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -124,11 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         submitBtn.innerHTML = 'Signing up...<i class="fa fa-cog fa-spin"></i>';
-
-        // Continue with your form submission logic here...
     });
-
-    // Rest of your JavaScript code...
 });
 
 
@@ -173,11 +164,11 @@ function displayPasswordStrength() {
     setTimeout(() => {
         passwordStrength.textContent = '';
         passwordStrength.className = '';
-    }, 1000); // Hide the message after 3 seconds
+    }, 500); // Hide the message after 3 seconds
 }
 
 // Debounce the displayPasswordStrength function
-password.addEventListener('input', debounce(displayPasswordStrength, 2000));
+password.addEventListener('input', debounce(displayPasswordStrength, 1000));
 
 
 function calculatePasswordStrength(password) {
@@ -215,11 +206,11 @@ function setupFormSubmission() {
 
         // If validation passes, prepare the data to be sent
         const formData = {
-            fullName: fullName,
+            name: fullName,
             email: email,
             password: password,
             confirmPassword: confirmPassword,
-            // Include other form fields as necessary
+            // other form fields as necessary
         };
 
         // Use Fetch API to submit form data asynchronously
@@ -278,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
      container.insertBefore(errorPwdMessage , form)  
      setTimeout(()=>{
          errorPwdMessage.remove();
-        },3000)                           ;
+        },1000)                           ;
  }
   </script>
   </body>

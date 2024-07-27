@@ -11,7 +11,7 @@
     --cyan: #17a2b8;
     --white: #fff;
     --gray: #6c757d;
-    --gray-dark: #343a40;
+    --gray-dark: #022f71;
     --primary: #007bff;
     --secondary: #6c757d;
     --success: #28a745;
@@ -19,7 +19,7 @@
     --warning: #ffc107;
     --danger: #dc3545;
     --light: #f8f9fa;
-    --dark: #343a40;
+    --dark: #022f71;
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
     --breakpoint-md: 768px;
@@ -1903,7 +1903,7 @@
   
   .table .thead-dark th {
     color: #fff;
-    background-color: #343a40;
+    background-color: #022f71;
     border-color: #454d55;
   }
   
@@ -1915,7 +1915,7 @@
   
   .table-dark {
     color: #fff;
-    background-color: #343a40;
+    background-color: #022f71;
   }
   
   .table-dark th,
@@ -2852,8 +2852,8 @@
   
   .btn-dark {
     color: #fff;
-    background-color: #343a40;
-    border-color: #343a40;
+    background-color: #022f71;
+    border-color: #022f71;
   }
   
   .btn-dark:hover {
@@ -2869,8 +2869,8 @@
   
   .btn-dark.disabled, .btn-dark:disabled {
     color: #fff;
-    background-color: #343a40;
-    border-color: #343a40;
+    background-color: #022f71;
+    border-color: #022f71;
   }
   
   .btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,
@@ -3125,14 +3125,14 @@
   }
   
   .btn-outline-dark {
-    color: #343a40;
-    border-color: #343a40;
+    color: #022f71;
+    border-color: #022f71;
   }
   
   .btn-outline-dark:hover {
     color: #fff;
-    background-color: #343a40;
-    border-color: #343a40;
+    background-color: #022f71;
+    border-color: #022f71;
   }
   
   .btn-outline-dark:focus, .btn-outline-dark.focus {
@@ -3141,15 +3141,15 @@
   }
   
   .btn-outline-dark.disabled, .btn-outline-dark:disabled {
-    color: #343a40;
+    color: #022f71;
     background-color: transparent;
   }
   
   .btn-outline-dark:not(:disabled):not(.disabled):active, .btn-outline-dark:not(:disabled):not(.disabled).active,
   .show > .btn-outline-dark.dropdown-toggle {
     color: #fff;
-    background-color: #343a40;
-    border-color: #343a40;
+    background-color: #022f71;
+    border-color: #022f71;
   }
   
   .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus,
@@ -5417,7 +5417,7 @@
   
   .badge-dark {
     color: #fff;
-    background-color: #343a40;
+    background-color: #022f71;
   }
   
   a.badge-dark:hover, a.badge-dark:focus {
@@ -7029,7 +7029,7 @@
   }
   
   .bg-dark {
-    background-color: #343a40 !important;
+    background-color: #022f71 !important;
   }
   
   a.bg-dark:hover, a.bg-dark:focus,
@@ -7115,7 +7115,7 @@
   }
   
   .border-dark {
-    border-color: #343a40 !important;
+    border-color: #022f71 !important;
   }
   
   .border-white {
@@ -10488,7 +10488,7 @@
   }
   
   .text-dark {
-    color: #343a40 !important;
+    color: #022f71 !important;
   }
   
   a.text-dark:hover, a.text-dark:focus {

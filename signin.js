@@ -45,33 +45,18 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then((response)=>{
             if(response.ok){
-                console.log(response)
-                .then(data => {
-
-                    localStorage.setItem("token" , data.accessToken )
-                    console.log(data);
-                    if(data.success) {
-                        // modal successful shit
-                        modalText.textContent = 'Login successful!';
-                        successModal.style.display = "block";
-                        submitBtn.innerHTML = 'Log In';
-                        // Redirect after 3000 freaking miliseconds
-                        setTimeout(function() {
-                            window.location.href = '/home.html';
-                        }, 3000);
-                    } else {
-                        // show freaking error message
-                        modalText.textContent = 'Login failed: ' + data.message;
-                        successModal.style.display = "block";
-                        submitBtn.innerHTML = 'Log In';
-                    }
-                })
-                
+                console.log(response)               
             }
-
             return response.json()
+            // modal successful shit
+            modalText.textContent = 'Login successful!';
+            successModal.style.display = "block";
+            submitBtn.innerHTML = 'Log In';
+            // Redirect after 3000 freaking miliseconds
+            setTimeout(function() {
+                window.location.href = '/home.html';
+            }, 3000);
         })
-       
         .catch(error => {
             console.error('Error:', error);
             modalText.textContent = '! ' + error;

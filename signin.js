@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(function() {
                     window.location.href = '/home.html';
                 }, 3000);
-               
             }
         })
         .catch(error => {
